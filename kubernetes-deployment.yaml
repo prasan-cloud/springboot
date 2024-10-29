@@ -1,3 +1,10 @@
+# Namespace definition (optional if namespace already exists)
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sample-java
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,18 +25,19 @@ spec:
         image: 192.168.4.81:5000/sample-java-app:latest
         ports:
         - containerPort: 8080
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: sample-java-app-service
-  namespace:  sample-java
+  namespace: sample-java
 spec:
   selector:
     app: sample-java-app
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 8080
+      port: 80        # Cluster IP port
+      targetPort: 8080 # Container port
+      nodePort: 31000  # Custom NodePort
   type: NodePort
-
