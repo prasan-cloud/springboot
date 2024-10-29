@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-java-app
+  namespace: sample-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-java-app
+  template:
+    metadata:
+      labels:
+        app: sample-java-app
+    spec:
+      containers:
+      - name: sample-java-app
+        image: 192.168.4.81:5000/sample-java-app:latest
+        ports:
+        - containerPort: 7070
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-java-app-service
+  namespace:  sample-java
+spec:
+  selector:
+    app: sample-java-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 7070
+  type: NodePort
+
