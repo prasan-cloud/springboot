@@ -31,5 +31,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 7070
-  type: NodePort
+  type: LoadBalancer
 
